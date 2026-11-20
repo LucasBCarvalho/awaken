@@ -10,7 +10,6 @@ const RANK_COLOR: Record<Rank, string> = {
   S: '#7B3FE4',
 };
 
-/** Letra do rank dentro de um hexágono. */
 @Component({
   selector: 'aw-rank-badge',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-/** Janela translúcida do "Sistema": borda neon, cantos chanfrados, cabeçalho [ SISTEMA ]. */
 @Component({
   selector: 'aw-system-window',
   changeDetection: ChangeDetectionStrategy.OnPush,

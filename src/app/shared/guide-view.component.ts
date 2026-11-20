@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, input, output, signal } f
 import { IonIcon } from '@ionic/angular';
 import { EXERCISES, Level, LibraryTemplate, resolveTemplate, stepName } from '../core/library';
 
-/** Guia "como fazer": passo a passo, etapas/exercícios (com execução expansível) e dicas. */
 @Component({
   selector: 'aw-guide-view',
   changeDetection: ChangeDetectionStrategy.OnPush,

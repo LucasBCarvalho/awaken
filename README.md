@@ -1,4 +1,4 @@
-# AWAKEN — App de Missões com Progressão RPG
+# AWAKEN: app de missões com progressão RPG
 
 App mobile (Android/iOS) feito com **Angular 21 + Ionic 9 + Capacitor 8**. Offline-first: todo o progresso fica salvo no aparelho.
 
@@ -41,9 +41,9 @@ src/app/
 - Recompensas da vida real compradas com ouro
 - Missão oculta diária, Exame de Promoção (7 dias), modo férias, heatmap de consistência
 - Reduzir movimento, desligar brilho, vibração e som opcionais
-- **Biblioteca de missões** (48 modelos em 6 áreas) com guia "como fazer", treinos exercício a exercício e 3 níveis
-- **"Sistema, me fortaleça"**: recomenda missões pelos atributos fracos, objetivos, limite de Diárias e taxa de conclusão
-- **Conquistas** (22) em 5 níveis — Bronze, Prata, Ouro, Platina e Diamante — com recompensas e títulos
+- Biblioteca de missões (48 modelos em 6 áreas) com guia "como fazer", treinos exercício a exercício e 3 níveis
+- "Sistema, me fortaleça": recomenda missões pelos atributos fracos, objetivos, limite de Diárias e taxa de conclusão
+- 22 conquistas com 5 níveis (Bronze, Prata, Ouro, Platina e Diamante), recompensas e títulos
 
 ## Próximos passos
 

@@ -53,7 +53,7 @@ import { GameStore } from '../core/game.store';
               </div>
             }
             @if (quest().status === 'skipped') {
-              <div class="note">Adiada com Mana — sem penalidade</div>
+              <div class="note">Adiada com Mana, sem penalidade</div>
             }
           </div>
         </div>

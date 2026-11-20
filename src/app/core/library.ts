@@ -1,6 +1,5 @@
 import { AttributeKey, Difficulty, QuestType, Rank } from './models';
 
-/** Nível de execução: 1 Iniciante · 2 Intermediário · 3 Avançado */
 export type Level = 1 | 2 | 3;
 
 export const LEVEL_LABEL: Record<Level, string> = { 1: 'Iniciante', 2: 'Intermediário', 3: 'Avançado' };
@@ -8,8 +7,6 @@ export const LEVEL_LABEL: Record<Level, string> = { 1: 'Iniciante', 2: 'Intermed
 export function levelForRank(rank: Rank): Level {
   return rank === 'E' || rank === 'D' ? 1 : rank === 'C' || rank === 'B' ? 2 : 3;
 }
-
-// ───────────────────────── Exercícios (com execução) ─────────────────────────
 
 export interface Exercise {
   name: string;
@@ -32,7 +29,7 @@ export const EXERCISES: Record<string, Exercise> = {
   },
   flexao_joelhos: {
     name: 'Flexão com joelhos apoiados', muscles: 'Peito, ombros e tríceps',
-    how: ['Mãos no chão um pouco mais abertas que os ombros, joelhos apoiados.', 'Corpo reto da cabeça aos joelhos — não deixe o quadril cair.', 'Desça o peito até perto do chão, cotovelos a ~45° do corpo.', 'Empurre o chão e volte soltando o ar.'],
+    how: ['Mãos no chão um pouco mais abertas que os ombros, joelhos apoiados.', 'Corpo reto da cabeça aos joelhos, sem deixar o quadril cair.', 'Desça o peito até perto do chão, cotovelos a ~45° do corpo.', 'Empurre o chão e volte soltando o ar.'],
   },
   flexao: {
     name: 'Flexão de braço', muscles: 'Peito, ombros, tríceps e core',
@@ -52,7 +49,7 @@ export const EXERCISES: Record<string, Exercise> = {
   },
   afundo: {
     name: 'Afundo (avanço)', muscles: 'Coxas e glúteos',
-    how: ['Em pé, dê um passo largo à frente.', 'Desça até os dois joelhos formarem ~90°; o joelho de trás quase toca o chão.', 'Tronco ereto. Empurre com a perna da frente para voltar.', 'Alterne as pernas — as repetições são por perna.'],
+    how: ['Em pé, dê um passo largo à frente.', 'Desça até os dois joelhos formarem ~90°; o joelho de trás quase toca o chão.', 'Tronco ereto. Empurre com a perna da frente para voltar.', 'Alterne as pernas. As repetições são por perna.'],
   },
   mergulho: {
     name: 'Mergulho na cadeira (tríceps)', muscles: 'Tríceps e ombros',
@@ -89,8 +86,6 @@ export const EXERCISES: Record<string, Exercise> = {
   posterior: { name: 'Alongamento de posterior', muscles: 'Posterior de coxa', how: ['Em pé, pernas esticadas, desça o tronco em direção aos pés.', 'Vá até sentir alongar, sem forçar; segure 30 s.'] },
 };
 
-// ───────────────────────── Modelos de missão ─────────────────────────
-
 export interface Step {
   /** id em EXERCISES, se for um exercício */
   exercise?: string;
@@ -118,7 +113,6 @@ export interface LibraryTemplate {
   weekdays?: number[];
   /** Resumo de 1 linha para o card */
   summary: string;
-  /** Passo a passo de "como fazer" */
   how: string[];
   tips?: string[];
   /** Checklist (treinos, rotinas). Se existir, a meta = nº de etapas. */
@@ -130,7 +124,6 @@ const SEG_QUA_SEX = [1, 3, 5];
 const TER_QUI_SAB = [2, 4, 6];
 
 export const LIBRARY: LibraryTemplate[] = [
-  // ═════════════════════ FORÇA ═════════════════════
   {
     id: 'treino_corpo', title: 'Treino corpo inteiro em casa', attribute: 'FOR', category: 'Treinos', type: 'daily', difficulty: 'medium',
     target: 1, unit: '', weekdays: SEG_QUA_SEX,
@@ -159,7 +152,7 @@ export const LIBRARY: LibraryTemplate[] = [
     target: 1, unit: '', weekdays: TER_QUI_SAB,
     summary: 'Fortalece abdômen e lombar, ~12 min. Ótimo nos dias sem treino completo.',
     how: ['Faça os exercícios em sequência.', 'Descanse 30–45 s entre séries.', 'Mantenha a respiração: solte o ar na contração.'],
-    tips: ['Core forte protege a coluna e melhora todos os outros treinos.'],
+    tips: ['Core forte ajuda a proteger a lombar e dá estabilidade nos outros treinos.'],
     levels: {
       1: { steps: [{ exercise: 'abdominal', rx: '3 × 12' }, { exercise: 'prancha', rx: '3 × 20 s' }, { exercise: 'superman', rx: '3 × 10' }, { exercise: 'ponte', rx: '2 × 12' }] },
       2: { difficulty: 'medium', steps: [{ exercise: 'abdominal', rx: '4 × 15' }, { exercise: 'prancha', rx: '3 × 45 s' }, { exercise: 'prancha_lateral', rx: '3 × 20 s cada lado' }, { exercise: 'escalador', rx: '3 × 20' }, { exercise: 'superman', rx: '3 × 12' }] },
@@ -170,7 +163,7 @@ export const LIBRARY: LibraryTemplate[] = [
     id: 'flexoes', title: 'Flexões do dia', attribute: 'FOR', category: 'Desafios diários', type: 'daily', difficulty: 'easy',
     target: 20, unit: 'rep.',
     summary: 'Some flexões ao longo do dia, em quantas séries precisar.',
-    how: ['Não precisa ser de uma vez: faça séries pequenas ao longo do dia.', 'Registre cada série no contador.', 'Se não conseguir a flexão completa, apoie os joelhos — conta igual.'],
+    how: ['Não precisa ser de uma vez: faça séries pequenas ao longo do dia.', 'Registre cada série no contador.', 'Se não conseguir a flexão completa, apoie os joelhos. Conta igual.'],
     steps: undefined,
     levels: { 1: { target: 20 }, 2: { target: 50, difficulty: 'medium' }, 3: { target: 100, difficulty: 'hard' } },
   },
@@ -184,7 +177,7 @@ export const LIBRARY: LibraryTemplate[] = [
   {
     id: 'caminhada', title: 'Caminhada rápida', attribute: 'FOR', category: 'Cardio', type: 'daily', difficulty: 'easy',
     target: 20, unit: 'min',
-    summary: 'Caminhar em ritmo acelerado — o cardio mais fácil de manter.',
+    summary: 'Caminhar em ritmo acelerado. Dá para fazer quase todo dia, sem equipamento.',
     how: ['Ritmo em que você ainda consegue falar, mas não cantar.', 'Balance os braços e mantenha a postura ereta.', 'Pode dividir em 2 caminhadas menores.'],
     tips: ['Ouvir um podcast ou audiobook transforma isso em +INT também.'],
     levels: { 1: { target: 20 }, 2: { target: 35 }, 3: { target: 50, difficulty: 'medium' } },
@@ -193,7 +186,7 @@ export const LIBRARY: LibraryTemplate[] = [
     id: 'corrida_intervalada', title: 'Corrida intervalada', attribute: 'FOR', category: 'Cardio', type: 'daily', difficulty: 'medium',
     target: 1, unit: '', weekdays: TER_QUI_SAB,
     summary: 'Alterna corrida e caminhada. Caminho seguro para começar a correr.',
-    how: ['Aqueça caminhando antes.', 'Siga os blocos da lista, marcando cada um.', 'Corra num ritmo leve — a meta é completar, não ser rápido.', 'Termine caminhando para desacelerar.'],
+    how: ['Aqueça caminhando antes.', 'Siga os blocos da lista, marcando cada um.', 'Corra num ritmo leve. A meta é completar, não ser rápido.', 'Termine caminhando para desacelerar.'],
     levels: {
       1: { steps: [{ label: 'Aquecimento caminhando', rx: '5 min' }, { label: 'Corra 1 min + caminhe 2 min', rx: '× 6' }, { label: 'Desaquecimento caminhando', rx: '5 min' }] },
       2: { difficulty: 'hard', steps: [{ label: 'Aquecimento caminhando', rx: '5 min' }, { label: 'Corra 3 min + caminhe 1 min', rx: '× 6' }, { label: 'Desaquecimento', rx: '5 min' }] },
@@ -215,7 +208,6 @@ export const LIBRARY: LibraryTemplate[] = [
     levels: { 1: { target: 3 }, 2: { target: 4 }, 3: { target: 5, difficulty: 'hard' } },
   },
 
-  // ═════════════════════ VITALIDADE ═════════════════════
   {
     id: 'agua', title: 'Beber água', attribute: 'VIT', category: 'Hidratação e alimentação', type: 'daily', difficulty: 'easy',
     target: 8, unit: 'copos',
@@ -263,12 +255,11 @@ export const LIBRARY: LibraryTemplate[] = [
     how: ['De preferência antes das 10h.', 'Pode ser caminhando, na janela aberta ou na varanda.'],
   },
 
-  // ═════════════════════ INTELIGÊNCIA ═════════════════════
   {
     id: 'leitura_ficcao', title: 'Leitura de ficção', attribute: 'INT', category: 'Leitura', type: 'daily', difficulty: 'easy',
     target: 10, unit: 'pág.',
     summary: 'Romance, fantasia, mangá/manhwa em livro, contos. Leitura por prazer.',
-    how: ['Escolha um livro que você realmente queira ler — prazer mantém o hábito.', 'Leia num horário fixo (antes de dormir funciona bem).', 'Registre as páginas lidas.'],
+    how: ['Escolha um livro que você queira ler. Livro chato faz largar o hábito.', 'Leia num horário fixo (antes de dormir funciona bem).', 'Registre as páginas lidas.'],
     tips: ['Sugestões para começar: um livro curto (até 200 pág.) ou o primeiro de uma série.', 'Largar um livro chato é permitido. Troque sem culpa.'],
     levels: { 1: { target: 10 }, 2: { target: 25 }, 3: { target: 50, difficulty: 'medium' } },
   },
@@ -284,7 +275,7 @@ export const LIBRARY: LibraryTemplate[] = [
     id: 'estudo_ativo', title: 'Estudo ativo (livro técnico ou matéria)', attribute: 'INT', category: 'Estudo', type: 'daily', difficulty: 'medium',
     target: 1, unit: '',
     summary: 'Estudar de verdade: ler, resumir e testar o que aprendeu.',
-    how: ['Siga as etapas — elas usam técnicas comprovadas de aprendizado.', 'Celular longe durante o estudo.'],
+    how: ['Siga as etapas na ordem: resumir e se testar sem consultar fixa mais do que reler.', 'Celular longe durante o estudo.'],
     steps: [
       { label: 'Ler uma seção ou capítulo', rx: '25 min' },
       { label: 'Fechar o material e escrever um resumo com suas palavras' },
@@ -320,8 +311,8 @@ export const LIBRARY: LibraryTemplate[] = [
   {
     id: 'flashcards', title: 'Revisão com flashcards', attribute: 'INT', category: 'Estudo', type: 'daily', difficulty: 'easy',
     target: 15, unit: 'min',
-    summary: 'Repetição espaçada: a forma mais eficiente de memorizar.',
-    how: ['Use um app de flashcards (ex.: Anki) ou cartões de papel.', 'Pergunta de um lado, resposta curta do outro.', 'Revise todo dia o que o app mandar — constância vence quantidade.'],
+    summary: 'Repetição espaçada: cada cartão volta pouco antes de você esquecer.',
+    how: ['Use um app de flashcards (ex.: Anki) ou cartões de papel.', 'Pergunta de um lado, resposta curta do outro.', 'Revise todo dia o que o app mandar. Pular dias acumula revisões.'],
   },
   {
     id: 'idioma', title: 'Praticar um idioma', attribute: 'INT', category: 'Estudo', type: 'daily', difficulty: 'easy',
@@ -343,12 +334,11 @@ export const LIBRARY: LibraryTemplate[] = [
     how: ['Escolha o livro hoje.', 'Páginas ÷ 30 = sua meta diária (crie uma Diária de leitura com esse número).', 'Marque quando terminar.'],
   },
 
-  // ═════════════════════ PERCEPÇÃO ═════════════════════
   {
     id: 'meditacao', title: 'Meditação de atenção plena', attribute: 'PER', category: 'Mente', type: 'daily', difficulty: 'easy',
     target: 5, unit: 'min',
     summary: 'Treino de foco e calma. Comece com poucos minutos.',
-    how: ['Sente-se confortável, costas retas, olhos fechados.', 'Preste atenção no ar entrando e saindo pelo nariz.', 'Quando a mente fugir (vai fugir!), perceba e volte para a respiração — esse "voltar" É o exercício.', 'Use um timer para não ficar olhando o relógio.'],
+    how: ['Sente-se confortável, costas retas, olhos fechados.', 'Preste atenção no ar entrando e saindo pelo nariz.', 'Quando a mente fugir (vai fugir), perceba e volte para a respiração. Voltar é o exercício.', 'Use um timer para não ficar olhando o relógio.'],
     tips: ['Apps de meditação guiada ajudam no início.'],
     levels: { 1: { target: 5 }, 2: { target: 10 }, 3: { target: 20, difficulty: 'medium' } },
   },
@@ -387,11 +377,10 @@ export const LIBRARY: LibraryTemplate[] = [
   {
     id: 'sem_celular', title: 'Caminhada sem celular', attribute: 'PER', category: 'Mente', type: 'daily', difficulty: 'easy',
     target: 15, unit: 'min',
-    summary: 'Andar sem fone e sem tela. A mente organiza as ideias sozinha.',
+    summary: 'Andar sem fone e sem tela, só com os próprios pensamentos.',
     how: ['Deixe o celular em casa (ou no bolso, no modo avião).', 'Observe o caminho: sons, pessoas, detalhes.'],
   },
 
-  // ═════════════════════ AGILIDADE ═════════════════════
   {
     id: 'zerar_email', title: 'Zerar a caixa de e-mail', attribute: 'AGI', category: 'Produtividade', type: 'daily', difficulty: 'easy',
     target: 1, unit: '',
@@ -435,11 +424,10 @@ export const LIBRARY: LibraryTemplate[] = [
     how: ['Liste 5 pendências antigas (documento, conserto, ligação, cadastro…).', 'Resolva uma por vez ao longo da semana.'],
   },
 
-  // ═════════════════════ CARISMA ═════════════════════
   {
     id: 'mensagem', title: 'Mandar mensagem para alguém querido', attribute: 'CAR', category: 'Conexões', type: 'daily', difficulty: 'trivial',
     target: 1, unit: '',
-    summary: 'Manter laços vivos com pequenas atitudes.',
+    summary: 'Uma mensagem curta para não perder o contato.',
     how: ['Pense em alguém com quem não fala há um tempo.', 'Mande algo específico: "vi isso e lembrei de você", uma pergunta sobre a vida dela.'],
   },
   {
@@ -451,7 +439,7 @@ export const LIBRARY: LibraryTemplate[] = [
   {
     id: 'elogio', title: 'Fazer um elogio sincero', attribute: 'CAR', category: 'Conexões', type: 'daily', difficulty: 'trivial',
     target: 1, unit: '',
-    summary: 'Reconhecer algo bom em alguém — no trabalho, em casa, em qualquer lugar.',
+    summary: 'Dizer a alguém o que ela fez de bom, no trabalho ou em casa.',
     how: ['Seja específico: em vez de "bom trabalho", diga o que exatamente foi bom.', 'Elogie atitudes e esforço, não só aparência.'],
   },
   {
@@ -464,7 +452,7 @@ export const LIBRARY: LibraryTemplate[] = [
     id: 'encontrar_amigo', title: 'Encontrar um amigo', attribute: 'CAR', category: 'Social', type: 'weekly', difficulty: 'medium',
     target: 1, unit: '',
     summary: 'Ver alguém pessoalmente: café, jogo, caminhada, almoço.',
-    how: ['Mande o convite com dia e lugar sugeridos (convite vago não acontece).', 'Online também vale se a pessoa mora longe — com câmera ligada.'],
+    how: ['Mande o convite com dia e lugar sugeridos (convite vago não acontece).', 'Se a pessoa mora longe, chamada de vídeo também vale.'],
   },
   {
     id: 'gentileza', title: 'Ato de gentileza', attribute: 'CAR', category: 'Social', type: 'daily', difficulty: 'easy',
@@ -475,7 +463,7 @@ export const LIBRARY: LibraryTemplate[] = [
   {
     id: 'puxar_conversa', title: 'Puxar conversa com alguém novo', attribute: 'CAR', category: 'Social', type: 'weekly', difficulty: 'hard',
     target: 2, unit: 'conversas',
-    summary: 'Treino de desenvoltura social, fora da zona de conforto.',
+    summary: 'Treino para perder a vergonha de falar com desconhecidos.',
     how: ['Comece com um comentário sobre o ambiente ("esse lugar sempre fica cheio assim?").', 'Faça uma pergunta aberta e escute.', 'Não precisa ser longa: 2 minutos já contam.'],
     levels: { 1: { target: 1, difficulty: 'medium' }, 2: { target: 2 }, 3: { target: 4 } },
   },
@@ -483,7 +471,6 @@ export const LIBRARY: LibraryTemplate[] = [
 
 export const LIBRARY_MAP: Record<string, LibraryTemplate> = Object.fromEntries(LIBRARY.map((t) => [t.id, t]));
 
-/** Resolve o modelo para um nível (meta, dificuldade e etapas). */
 export function resolveTemplate(t: LibraryTemplate, level: Level) {
   const v = t.levels?.[level] ?? t.levels?.[2] ?? t.levels?.[1];
   const steps = v?.steps ?? t.steps;

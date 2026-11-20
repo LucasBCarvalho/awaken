@@ -6,7 +6,6 @@ import { CLASSES } from '../core/catalog';
 import { RankBadgeComponent } from './rank-badge.component';
 import { StatBarComponent } from './stat-bar.component';
 
-/** Topo fixo: avatar, nome, rank, nível, XP, HP, Mana e moedas. */
 @Component({
   selector: 'aw-hero-header',
   changeDetection: ChangeDetectionStrategy.OnPush,

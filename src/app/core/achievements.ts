@@ -25,7 +25,6 @@ export interface AchievementDef {
 const byAttr = (a: AttributeKey) => (s: GameState) => s.stats.byAttr[a];
 
 export const ACHIEVEMENTS: AchievementDef[] = [
-  // Jornada
   { id: 'missoes', name: 'Caçador em Ascensão', category: 'Jornada', icon: 'flame', description: 'Conclua {n} missões.', targets: [1, 25, 100, 500, 2000], metric: (s) => s.totalCompleted },
   { id: 'sequencia', name: 'Inabalável', category: 'Jornada', icon: 'flame', description: 'Alcance uma sequência de {n} dias.', targets: [3, 7, 30, 100, 365], metric: (s) => Math.max(s.streak, s.streakMax) },
   { id: 'perfeitos', name: 'Dia Perfeito', category: 'Jornada', icon: 'checkmark-circle', description: 'Complete 100% das Diárias em {n} dias.', targets: [1, 7, 30, 100, 300], metric: (s) => s.history.filter((h) => h.total > 0 && h.done >= h.total).length },
@@ -33,7 +32,6 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: 'rank', name: 'Promovido', category: 'Jornada', icon: 'ribbon', description: 'Suba {n} rank(s) pelo Exame de Promoção.', targets: [1, 2, 3, 4, 5], metric: (s) => rankIndex(s.rank) },
   { id: 'sobrevivente', name: 'Sobrevivente', category: 'Jornada', icon: 'skull', description: 'Saia da Zona de Penalidade {n} vez(es).', targets: [1, 3, 5, 10, 20], metric: (s) => s.stats.escapes },
 
-  // Atributos
   { id: 'for', name: 'Corpo de Aço', category: 'Atributos', icon: 'barbell', description: 'Conclua {n} missões de Força.', targets: [10, 50, 150, 400, 1000], metric: byAttr('FOR') },
   { id: 'vit', name: 'Fonte de Vida', category: 'Atributos', icon: 'heart', description: 'Conclua {n} missões de Vitalidade.', targets: [10, 50, 150, 400, 1000], metric: byAttr('VIT') },
   { id: 'agi', name: 'Relâmpago', category: 'Atributos', icon: 'flash', description: 'Conclua {n} missões de Agilidade.', targets: [10, 50, 150, 400, 1000], metric: byAttr('AGI') },
@@ -41,7 +39,6 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: 'per', name: 'Olho que Tudo Vê', category: 'Atributos', icon: 'eye', description: 'Conclua {n} missões de Percepção.', targets: [10, 50, 150, 400, 1000], metric: byAttr('PER') },
   { id: 'car', name: 'Coração de Líder', category: 'Atributos', icon: 'people', description: 'Conclua {n} missões de Carisma.', targets: [10, 50, 150, 400, 1000], metric: byAttr('CAR') },
 
-  // Disciplina
   { id: 'treinos', name: 'Disciplina de Ferro', category: 'Disciplina', icon: 'barbell', description: 'Complete {n} treinos ou rotinas com checklist.', targets: [1, 10, 40, 100, 250], metric: (s) => s.stats.checklists },
   { id: 'semanais', name: 'Ritmo Semanal', category: 'Disciplina', icon: 'calendar', description: 'Conclua {n} missões Semanais.', targets: [1, 10, 30, 80, 200], metric: (s) => s.stats.byType.weekly },
   { id: 'mensais', name: 'Visão de Longo Prazo', category: 'Disciplina', icon: 'trophy', description: 'Conclua {n} missões Mensais.', targets: [1, 3, 6, 12, 24], metric: (s) => s.stats.byType.monthly },
@@ -49,7 +46,6 @@ export const ACHIEVEMENTS: AchievementDef[] = [
   { id: 'foco', name: 'Estado de Fluxo', category: 'Disciplina', icon: 'sparkles', description: 'Ative o Foco {n} vez(es).', targets: [1, 10, 50, 150, 400], metric: (s) => s.stats.focus },
   { id: 'ocultas', name: 'Olhos Atentos', category: 'Disciplina', icon: 'eye', description: 'Complete {n} missões ocultas.', targets: [1, 7, 30, 100, 250], metric: (s) => s.stats.surprises },
 
-  // Tesouros
   { id: 'baus', name: 'Caçador de Tesouros', category: 'Tesouros', icon: 'gift', description: 'Abra {n} baús.', targets: [1, 10, 50, 150, 365], metric: (s) => s.stats.chests },
   { id: 'itens', name: 'Colecionador', category: 'Tesouros', icon: 'cube', description: 'Encontre {n} itens.', targets: [1, 10, 30, 80, 200], metric: (s) => s.stats.items },
   { id: 'ouro', name: 'Fortuna', category: 'Tesouros', icon: 'ellipse', description: 'Ganhe {n} de ouro no total.', targets: [100, 1000, 5000, 20000, 100000], metric: (s) => s.stats.goldEarned },
@@ -78,7 +74,6 @@ export function tierDescription(a: AchievementDef, tier: number): string {
   return text;
 }
 
-/** Quantos níveis o valor atual alcança (0–5). */
 export function tiersReached(a: AchievementDef, value: number): number {
   return a.targets.filter((t) => value >= t).length;
 }

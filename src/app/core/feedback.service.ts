@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 
-/** Háptico e som curto "digital". Tudo opcional e sem bloquear a UI. */
 @Injectable({ providedIn: 'root' })
 export class FeedbackService {
   hapticsOn = true;

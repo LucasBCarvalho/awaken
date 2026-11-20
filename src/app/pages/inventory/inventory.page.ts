@@ -147,7 +147,6 @@ type Filter = 'all' | ItemType | 'other';
         }
       </div>
 
-      <!-- Detalhe do item -->
       <ion-modal [isOpen]="!!selected()" (didDismiss)="selected.set(null)" [breakpoints]="[0, 0.6]" [initialBreakpoint]="0.6" class="sheet">
         <ng-template>
           @if (selected(); as e) {

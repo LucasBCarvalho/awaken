@@ -6,7 +6,6 @@ import { LEVEL_LABEL, hasLevels, resolveTemplate } from '../../core/library';
 import { SystemWindowComponent } from '../../shared/system-window.component';
 import { GuideViewComponent } from '../../shared/guide-view.component';
 
-/** "Sistema, me fortaleça": análise do jogador + missões propostas com motivo. */
 @Component({
   selector: 'aw-recommend',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,7 +50,7 @@ import { GuideViewComponent } from '../../shared/guide-view.component';
             }
           </div>
         } @empty {
-          <p class="muted c">Você já tem missões de todas as áreas disponíveis na biblioteca. Impressionante, Caçador.</p>
+          <p class="muted c">Não sobrou missão da Biblioteca para sugerir. Todas já estão na sua lista.</p>
         }
 
         <div class="cta">

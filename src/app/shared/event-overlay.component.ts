@@ -20,7 +20,6 @@ interface Float {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [SystemWindowComponent, RankBadgeComponent, IonIcon],
   template: `
-    <!-- Chips de recompensa que sobem até a barra do topo -->
     <div class="floats" aria-hidden="true">
       @for (f of floats(); track f.id) {
         <div class="float">

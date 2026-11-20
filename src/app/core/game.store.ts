@@ -115,13 +115,11 @@ export class GameStore {
   readonly ready = signal(false);
   /** Relógio atualizado a cada 30 s (contagens regressivas). */
   readonly now = signal(Date.now());
-  /** Fila de eventos para janelas do Sistema. */
   readonly events = signal<GameEvent[]>([]);
 
   private undoSnapshot: { state: GameState; expires: number } | null = null;
   private saveTimer?: ReturnType<typeof setTimeout>;
 
-  // ───────────── Derivados ─────────────
   readonly xpNeeded = computed(() => xpToNext(this._state().level));
   readonly xpRatio = computed(() => Math.min(1, this._state().xp / this.xpNeeded()));
   readonly today = computed(() => dayKey(new Date(this.now()), this._state().settings.resetHour));
@@ -207,7 +205,6 @@ export class GameStore {
     });
   }
 
-  // ───────────── Ciclo de vida ─────────────
   async init(): Promise<void> {
     try {
       const { value } = await Preferences.get({ key: STORAGE_KEY });
@@ -272,7 +269,6 @@ export class GameStore {
     this.events.update((q) => q.slice(1));
   }
 
-  // ───────────── Onboarding ─────────────
   completeOnboarding(name: string, objectives: string[], templates: QuestTemplate[], resetHour: number): void {
     const now = new Date();
     this.mutate((s) => {
@@ -322,14 +318,12 @@ export class GameStore {
     };
   }
 
-  /** O Sistema sugere 2 semanais baseadas nos atributos mais fracos. */
   private suggestWeeklies(s: GameState): void {
     s.quests = s.quests.filter((q) => !(q.type === 'weekly' && q.origin === 'system'));
     const weakest = [...ATTRIBUTE_KEYS].sort((a, b) => s.attributes[a] - s.attributes[b] || Math.random() - 0.5).slice(0, 2);
     for (const a of weakest) s.quests.push(this.buildQuest(WEEKLY_SUGGESTIONS[a], 'system', s));
   }
 
-  // ───────────── CRUD de missões ─────────────
   addQuest(t: QuestTemplate & { weekdays?: number[] }): void {
     this.mutate((s) => s.quests.push(this.buildQuest(t, 'user', s)));
     const dailies = this._state().quests.filter((q) => q.type === 'daily').length;
@@ -349,7 +343,6 @@ export class GameStore {
     this.mutate((s) => (s.quests = s.quests.filter((q) => q.id !== id)));
   }
 
-  // ───────────── Conclusão ─────────────
   previewReward(q: Quest): RewardPreview {
     return this.calcReward(q, this._state());
   }
@@ -371,7 +364,6 @@ export class GameStore {
     return { xp: Math.round(xp), gold: Math.round(gold) };
   }
 
-  /** Incrementa um contador; conclui ao atingir a meta. */
   increment(id: string, amount = 1): void {
     const q = this._state().quests.find((x) => x.id === id);
     if (!q || q.status !== 'pending') return;
@@ -387,7 +379,6 @@ export class GameStore {
     }
   }
 
-  /** Marca/desmarca uma etapa (exercício do treino, item da rotina). */
   toggleCheck(id: string, index: number): void {
     const q = this._state().quests.find((x) => x.id === id);
     if (!q || q.status !== 'pending' || !q.checks) return;
@@ -405,7 +396,6 @@ export class GameStore {
     });
   }
 
-  /** Adiciona uma missão da Biblioteca no nível e ciclo escolhidos. */
   addFromLibrary(templateId: string, level: Level, type?: QuestType): void {
     this.addQuest(fromLibrary(templateId, level, type));
     this.fx.success();
@@ -431,7 +421,6 @@ export class GameStore {
     const objectiveAttrs = new Set(OBJECTIVES.filter((o) => s.objectives.includes(o.key)).map((o) => o.attribute));
     const countByAttr = (a: AttributeKey) => active.filter((q) => q.attribute === a).length;
 
-    // taxa de conclusão dos últimos 7 dias
     const from = addDays(this.today(), -7);
     const recent = s.history.filter((h) => h.date >= from && h.date < this.today() && h.total > 0);
     const rate = recent.length ? recent.reduce((a, h) => a + h.done / h.total, 0) / recent.length : null;
@@ -505,21 +494,17 @@ export class GameStore {
       if (t.checks) s.stats.checklists++;
       if (new Date().getHours() < 8) s.stats.early++;
 
-      // Atributo
       s.attributeXp[t.attribute] += Math.round(xpGain * 0.5);
       while (s.attributeXp[t.attribute] >= ATTRIBUTE_XP_STEP) {
         s.attributeXp[t.attribute] -= ATTRIBUTE_XP_STEP;
         s.attributes[t.attribute]++;
       }
 
-      // Histórico do dia
       const rec = this.dayRecord(s, s.lastDayKey);
       rec.xp += xpGain;
 
-      // Exame: missão Épica
       if (s.exam?.status === 'active' && t.difficulty === 'epic') s.exam.epicDone = true;
 
-      // Zona de Penalidade: recuperação
       if (s.penaltyUntil && s.penaltyUntil > Date.now() && (t.difficulty === 'trivial' || t.difficulty === 'easy')) {
         s.penaltyProgress++;
         if (s.penaltyProgress >= 3) {
@@ -531,7 +516,6 @@ export class GameStore {
         }
       }
 
-      // Drop
       const dropChance = DIFFICULTY[t.difficulty].drop * (t.type === 'daily' || t.type === 'todo' ? 1 : 1.5) + this.bonuses().drop;
       if (Math.random() < dropChance) {
         const itemId = this.rollItem(rollRarity(Math.random));
@@ -540,7 +524,6 @@ export class GameStore {
         events.push({ kind: 'item', itemId, source: 'Drop de missão' });
       }
 
-      // XP e level up
       this.gainXp(s, xpGain, events);
     });
 
@@ -585,7 +568,6 @@ export class GameStore {
     this.fx.tap();
   }
 
-  /** Habilidade: adiar missão diária sem penalidade (custa Mana). */
   postpone(id: string): boolean {
     const s = this._state();
     const q = s.quests.find((x) => x.id === id);
@@ -601,7 +583,6 @@ export class GameStore {
     return true;
   }
 
-  /** Habilidade: Foco — XP dobrado por 25 min. */
   activateFocus(): boolean {
     if (this._state().mana < SKILL_COST.focus || this.focusActive()) {
       this.fx.warn();
@@ -617,7 +598,6 @@ export class GameStore {
     return true;
   }
 
-  // ───────────── Resets ─────────────
   private dayRecord(s: GameState, date: string) {
     let rec = s.history.find((h) => h.date === date);
     if (!rec) {
@@ -702,7 +682,6 @@ export class GameStore {
       }
     }
 
-    // Sequência
     if (frozen || vacation) {
       /* mantém */
     } else if (perfect && gap <= 0) {
@@ -713,7 +692,6 @@ export class GameStore {
     }
     s.streakMax = Math.max(s.streakMax, s.streak);
 
-    // Exame de Promoção
     if (s.exam?.status === 'active') {
       if (perfect && gap <= 0) {
         s.exam.perfectDays++;
@@ -735,7 +713,6 @@ export class GameStore {
     }
     if (s.exam && s.exam.status === 'passed') s.exam = null;
 
-    // Zona de Penalidade
     if (s.hp <= 0 && !(s.penaltyUntil && s.penaltyUntil > Date.now())) {
       s.penaltyUntil = Date.now() + 24 * 3600_000;
       s.penaltyProgress = 0;
@@ -743,7 +720,6 @@ export class GameStore {
       this.fx.warn();
     }
 
-    // Novo dia
     for (const q of s.quests.filter((x) => x.type === 'daily')) this.resetInstance(q, today);
     s.quests = s.quests.filter((q) => !(q.type === 'todo' && q.status === 'done' && q.completedAt && Date.now() - q.completedAt > 86400_000));
     s.mana = MAX_MANA;
@@ -767,7 +743,6 @@ export class GameStore {
     }
   }
 
-  // ───────────── Missão surpresa ─────────────
   private scheduleSurprise(): void {
     const s = this._state();
     const today = this.today();
@@ -822,7 +797,6 @@ export class GameStore {
     this.fx.success();
   }
 
-  // ───────────── Itens e baús ─────────────
   private rollItem(rarity: Rarity): string {
     let idx = RARITY_ORDER.indexOf(rarity);
     while (idx >= 0) {
@@ -1003,7 +977,6 @@ export class GameStore {
     return true;
   }
 
-  // ───────────── Recompensas da vida real ─────────────
   addCustomReward(name: string, price: number): void {
     this.mutate((s) => s.customRewards.push({ id: uid(), name: name.trim(), price: Math.max(1, Math.round(price)), redeemed: 0 }));
   }
@@ -1028,7 +1001,6 @@ export class GameStore {
     return true;
   }
 
-  // ───────────── Perfil ─────────────
   allocatePoint(attr: AttributeKey): void {
     if (this._state().freePoints <= 0) return;
     this.mutate((s) => {
@@ -1082,7 +1054,6 @@ export class GameStore {
     this.events.set([]);
   }
 
-  /** Dificuldade sugerida para a criação rápida (heurística simples). */
   suggestDifficulty(title: string, target: number, unit: string): Difficulty {
     const t = title.toLowerCase();
     const mins = unit.startsWith('min') ? target : unit === 'h' ? target * 60 : 0;

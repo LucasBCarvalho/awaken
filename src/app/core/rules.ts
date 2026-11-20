@@ -1,8 +1,5 @@
 import { AttributeKey, Difficulty, QuestType, Rank, Rarity } from './models';
 
-// ───────────────────────── XP e nível ─────────────────────────
-
-/** XP necessário para ir do nível n ao n+1: ⌈50 · n^1,3⌉ */
 export function xpToNext(level: number): number {
   return Math.ceil(50 * Math.pow(level, 1.3));
 }
@@ -29,12 +26,9 @@ export const TYPE_LABEL: Record<QuestType, string> = {
   todo: 'Avulsa',
 };
 
-/** +5% a cada 7 dias de streak, teto de +50%. */
 export function streakBonus(streak: number): number {
   return Math.min(0.5, Math.floor(streak / 7) * 0.05);
 }
-
-// ───────────────────────── Ranks ─────────────────────────
 
 export const RANKS: { rank: Rank; minLevel: number; unlock: string }[] = [
   { rank: 'E', minLevel: 1, unlock: 'Missões diárias, inventário básico' },
@@ -54,12 +48,9 @@ export function rankIndex(rank: Rank): number {
   return RANKS.findIndex((r) => r.rank === rank);
 }
 
-/** Dificuldade das diárias sobe por rank (multiplicador da meta). */
 export function rankTargetScale(rank: Rank): number {
   return 1 + rankIndex(rank) * 0.25;
 }
-
-// ───────────────────────── Atributos ─────────────────────────
 
 export const ATTRIBUTES: Record<AttributeKey, { name: string; area: string; icon: string; color: string }> = {
   FOR: { name: 'Força', area: 'Exercício', icon: 'barbell', color: '#FF7A59' },
@@ -74,8 +65,6 @@ export const ATTRIBUTE_KEYS: AttributeKey[] = ['FOR', 'VIT', 'AGI', 'INT', 'PER'
 
 /** XP de atributo necessário para +1 ponto. */
 export const ATTRIBUTE_XP_STEP = 100;
-
-// ───────────────────────── Raridade e drops ─────────────────────────
 
 export const RARITY: Record<Rarity, { label: string; color: string; weight: number }> = {
   common: { label: 'Comum', color: '#9AA5B8', weight: 60 },
@@ -101,8 +90,6 @@ export function rollRarity(rng: () => number, minRarity: Rarity = 'common'): Rar
   }
   return pool[pool.length - 1];
 }
-
-// ───────────────────────── Períodos (com hora de reset) ─────────────────────────
 
 function shifted(date: Date, resetHour: number): Date {
   return new Date(date.getTime() - resetHour * 3600_000);
@@ -154,7 +141,6 @@ export function periodKey(type: QuestType, now: Date, resetHour: number): string
   }
 }
 
-/** Próximo instante de reset diário. */
 export function nextResetAt(now: Date, resetHour: number): Date {
   const next = new Date(now);
   next.setHours(resetHour, 0, 0, 0);

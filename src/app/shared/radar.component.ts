@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { AttributeKey } from '../core/models';
 import { ATTRIBUTE_KEYS } from '../core/rules';
 
-/** Gráfico de radar hexagonal dos 6 atributos. */
 @Component({
   selector: 'aw-radar',
   changeDetection: ChangeDetectionStrategy.OnPush,

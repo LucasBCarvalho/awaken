@@ -31,7 +31,6 @@ export interface Quest {
   totalCompletions: number;
   /** Falhas seguidas (ajuste automático de dificuldade). */
   failStreak: number;
-  /** Modelo da Biblioteca (guia "como fazer" e etapas). */
   templateId?: string;
   level?: 1 | 2 | 3;
   /** Etapas marcadas no período atual (treinos/rotinas). */
@@ -46,14 +45,13 @@ export interface ItemDef {
   icon: string;
   description: string;
   minLevel: number;
-  /** Bônus percentual de XP (0.05 = +5%) — opcionalmente restrito a um atributo. */
+  /** 0.05 = +5% de XP; se xpAttribute existir, vale só para esse atributo. */
   xpBonus?: number;
   xpAttribute?: AttributeKey;
   goldBonus?: number;
   dropBonus?: number;
   /** Redução de perda de HP (0.2 = -20%). */
   hpShield?: number;
-  /** Efeito ao usar (consumíveis). */
   use?: 'heal' | 'focus' | 'freeze' | 'mana';
   price?: number;
 }

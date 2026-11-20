@@ -1,9 +1,5 @@
 import { AttributeKey, QuestType } from './models';
 
-/**
- * Criação rápida em linguagem natural (heurística local, funciona offline).
- * Ex.: "correr 5 km toda terça e quinta" → diária, ter/qui, meta 5 km, FOR.
- */
 export interface ParsedQuest {
   title: string;
   type: QuestType;
@@ -43,6 +39,7 @@ const UNITS: [RegExp, string][] = [
   [/^(l|litros?)$/, 'L'],
 ];
 
+// Ex.: "correr 5 km toda terça e quinta" → diária, ter/qui, meta 5 km, FOR.
 export function quickParse(input: string): ParsedQuest {
   const raw = input.trim();
   const text = raw.toLowerCase();
@@ -79,7 +76,7 @@ export function quickParse(input: string): ParsedQuest {
 
   const attribute = ATTR_HINTS.find(([re]) => re.test(text))?.[1] ?? 'AGI';
 
-  // Título limpo: remove a parte de recorrência
+  // Tira do título a parte de recorrência
   let title = raw
     .replace(/\b(toda|todo|todas|todos|às|as|aos|nas|nos)\b.*$/i, '')
     .replace(/\s+(por semana|na semana|por m[êe]s|no m[êe]s).*$/i, '')

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
-/** Barra fina (XP / HP / Mana). Usa transform: scaleX para animar sem custo de layout. */
+// scaleX em vez de width para animar sem recalcular layout.
 @Component({
   selector: 'aw-stat-bar',
   changeDetection: ChangeDetectionStrategy.OnPush,

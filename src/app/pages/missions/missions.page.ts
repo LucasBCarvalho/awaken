@@ -36,7 +36,6 @@ const TABS: { key: QuestType; label: string }[] = [
           </aw-system-window>
         }
 
-        <!-- Card do dia -->
         <section class="day card" aria-label="Resumo do dia">
           <div class="ring" role="img" [attr.aria-label]="dailyDone() + ' de ' + dailyTotal() + ' diárias concluídas'">
             <svg viewBox="0 0 64 64">
@@ -58,7 +57,6 @@ const TABS: { key: QuestType; label: string }[] = [
           </div>
         </section>
 
-        <!-- Habilidades -->
         <div class="skills">
           <button class="skill" type="button" (click)="focus()" [class.active]="store.focusActive()" [disabled]="!store.focusActive() && s().mana < focusCost">
             <ion-icon name="sparkles" />
@@ -70,7 +68,6 @@ const TABS: { key: QuestType; label: string }[] = [
           </button>
         </div>
 
-        <!-- Baús -->
         @for (c of chestList(); track c.kind) {
           <button class="chest" type="button" (click)="store.openChest(c.kind)">
             <ion-icon name="gift" />
@@ -79,7 +76,6 @@ const TABS: { key: QuestType; label: string }[] = [
           </button>
         }
 
-        <!-- Missão surpresa -->
         @if (s().surprise?.status === 'active') {
           <aw-system-window header="MISSÃO OCULTA" tone="violet">
             <p class="surp">{{ s().surprise!.title }}</p>
@@ -88,7 +84,6 @@ const TABS: { key: QuestType; label: string }[] = [
           </aw-system-window>
         }
 
-        <!-- Segmentos -->
         <div class="seg" role="tablist">
           @for (t of tabs; track t.key) {
             <button role="tab" type="button" class="seg-btn" [class.on]="tab() === t.key" [attr.aria-selected]="tab() === t.key" (click)="tab.set(t.key)">
@@ -118,7 +113,7 @@ const TABS: { key: QuestType; label: string }[] = [
 
         <button class="sys-btn" type="button" (click)="system()">
           <ion-icon name="sparkles" />
-          <span><b>Sistema, me fortaleça</b><small>Analisa seus pontos fracos e adiciona as missões certas</small></span>
+          <span><b>Sistema, me fortaleça</b><small>Sugere missões para seus atributos mais baixos</small></span>
           <ion-icon name="chevron-forward" />
         </button>
 

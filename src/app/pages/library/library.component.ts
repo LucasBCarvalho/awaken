@@ -24,7 +24,7 @@ const PLURAL: Record<QuestType, string> = { daily: 'Diárias', weekly: 'Semanais
 
           <button class="sys" type="button" (click)="askSystem()">
             <ion-icon name="sparkles" />
-            <span><b>Sistema, escolha por mim</b><small>Ele analisa seus pontos fracos e sugere o que fazer</small></span>
+            <span><b>Sistema, escolha por mim</b><small>Sugere missões para seus atributos mais baixos</small></span>
             <ion-icon name="chevron-forward" />
           </button>
 

@@ -57,7 +57,7 @@ const INTRO = 'Você foi escolhido como Jogador.';
           }
           @case (3) {
             <h1 class="page-title">Missões Diárias</h1>
-            <p class="muted">O Sistema sugere estas {{ suggestions().length }} Diárias de dificuldade Fácil. Desmarque as que não quiser — você pode editar tudo depois.</p>
+            <p class="muted">O Sistema sugere estas {{ suggestions().length }} Diárias de dificuldade Fácil. Desmarque as que não quiser. Dá para editar tudo depois.</p>
             <div class="sugs">
               @for (q of suggestions(); track $index) {
                 <button type="button" class="sug" [class.off]="!enabled()[$index]" (click)="toggleSug($index)" [attr.aria-pressed]="enabled()[$index]">

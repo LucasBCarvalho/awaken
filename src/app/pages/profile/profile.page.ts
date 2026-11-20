@@ -100,7 +100,7 @@ const SHADOW_DAYS = 66;
 
         <div class="section-label">Exército de Sombras</div>
         <div class="card">
-          <p class="muted sm">Uma Diária cumprida por {{ shadowDays }} dias pode ser extraída como uma Sombra — um hábito dominado.</p>
+          <p class="muted sm">Uma Diária cumprida por {{ shadowDays }} dias pode ser extraída como Sombra, um hábito dominado.</p>
           @for (q of shadows(); track q.id) {
             <div class="shadow">
               <span class="sn">{{ q.title }}</span>

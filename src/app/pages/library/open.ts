@@ -24,7 +24,6 @@ export async function openQuestDetail(modals: ModalController, questId: string):
   await m.present();
 }
 
-/** Menu do botão "+": três caminhos para criar missões. */
 export async function openCreateMenu(sheets: ActionSheetController, modals: ModalController, initialType: QuestType = 'daily'): Promise<void> {
   const a = await sheets.create({
     header: 'Nova missão',

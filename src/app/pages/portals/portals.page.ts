@@ -14,7 +14,6 @@ import { RankBadgeComponent } from '../../shared/rank-badge.component';
       <div class="page top">
         <h1 class="page-title">Portais</h1>
 
-        <!-- Exame de Promoção -->
         @if (next(); as nr) {
           <aw-system-window header="EXAME DE PROMOÇÃO" tone="violet" [animate]="false">
             <div class="exam-head">
@@ -50,7 +49,6 @@ import { RankBadgeComponent } from '../../shared/rank-badge.component';
           <aw-system-window header="RANK MÁXIMO" tone="gold"><p class="c">Você alcançou o Rank S.</p></aw-system-window>
         }
 
-        <!-- Dungeons -->
         <div class="section-label">Dungeons</div>
         <div class="portal-card" [class.locked]="dungeonsLocked()">
           <div class="vortex glow-fx" aria-hidden="true"></div>

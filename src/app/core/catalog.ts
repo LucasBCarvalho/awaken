@@ -2,27 +2,22 @@ import { AttributeKey, ClassKey, Difficulty, ItemDef, QuestType } from './models
 import { LIBRARY_MAP, Level, resolveTemplate } from "./library";
 
 export const ITEMS: ItemDef[] = [
-  // Consumíveis
   { id: 'potion_hp', name: 'Poção de Vida', type: 'consumable', rarity: 'common', icon: 'flask', description: 'Recupera 30 HP.', minLevel: 1, use: 'heal', price: 40 },
   { id: 'potion_mana', name: 'Elixir de Mana', type: 'consumable', rarity: 'uncommon', icon: 'water', description: 'Recupera 50 de Mana.', minLevel: 1, use: 'mana', price: 60 },
   { id: 'scroll_focus', name: 'Pergaminho de Foco', type: 'consumable', rarity: 'rare', icon: 'sparkles', description: 'XP ×2 por 1 hora.', minLevel: 1, use: 'focus', price: 150 },
   { id: 'hourglass', name: 'Ampulheta Congelada', type: 'consumable', rarity: 'epic', icon: 'hourglass', description: 'Congela a sequência por 1 dia.', minLevel: 1, use: 'freeze', price: 320 },
-  // Armas
   { id: 'dagger_novice', name: 'Adaga do Iniciante', type: 'weapon', rarity: 'common', icon: 'flash', description: '+3% XP em Agilidade.', minLevel: 1, xpBonus: 0.03, xpAttribute: 'AGI', price: 90 },
   { id: 'iron_gauntlet', name: 'Manopla de Ferro', type: 'weapon', rarity: 'uncommon', icon: 'barbell', description: '+5% XP em Força.', minLevel: 3, xpBonus: 0.05, xpAttribute: 'FOR', price: 180 },
   { id: 'tome_echo', name: 'Tomo do Eco', type: 'weapon', rarity: 'rare', icon: 'book', description: '+8% XP em Inteligência.', minLevel: 5, xpBonus: 0.08, xpAttribute: 'INT', price: 420 },
   { id: 'phantom_blade', name: 'Lâmina Fantasma', type: 'weapon', rarity: 'epic', icon: 'flash', description: '+6% XP em todas as missões.', minLevel: 10, xpBonus: 0.06 },
   { id: 'void_edge', name: 'Fio do Vazio', type: 'weapon', rarity: 'legendary', icon: 'planet', description: '+10% XP em todas as missões.', minLevel: 20, xpBonus: 0.1 },
-  // Armaduras
   { id: 'cloth_vest', name: 'Colete de Tecido', type: 'armor', rarity: 'common', icon: 'shield', description: 'Reduz perda de HP em 10%.', minLevel: 1, hpShield: 0.1, price: 80 },
   { id: 'hunter_cloak', name: 'Manto do Caçador', type: 'armor', rarity: 'rare', icon: 'shield-half', description: 'Reduz perda de HP em 25%.', minLevel: 5, hpShield: 0.25, price: 400 },
   { id: 'abyss_plate', name: 'Couraça do Abismo', type: 'armor', rarity: 'epic', icon: 'shield-checkmark', description: 'Reduz perda de HP em 40%.', minLevel: 12, hpShield: 0.4 },
-  // Acessórios
   { id: 'ring_constancy', name: 'Anel da Constância', type: 'accessory', rarity: 'uncommon', icon: 'ellipse', description: '+5% de ouro.', minLevel: 2, goldBonus: 0.05, price: 160 },
   { id: 'amulet_sight', name: 'Amuleto da Visão', type: 'accessory', rarity: 'rare', icon: 'eye', description: '+3% chance de drop.', minLevel: 4, dropBonus: 0.03, price: 380 },
   { id: 'crown_dawn', name: 'Diadema da Aurora', type: 'accessory', rarity: 'epic', icon: 'star', description: '+10% ouro e +3% XP.', minLevel: 8, goldBonus: 0.1, xpBonus: 0.03 },
   { id: 'heart_first', name: 'Coração do Primeiro Chefe', type: 'accessory', rarity: 'legendary', icon: 'diamond', description: '+8% XP, +8% ouro, +5% drop.', minLevel: 15, xpBonus: 0.08, goldBonus: 0.08, dropBonus: 0.05 },
-  // Chaves e cosméticos
   { id: 'key_e', name: 'Chave de Portal Rank E', type: 'key', rarity: 'uncommon', icon: 'key', description: 'Abre um Portal Rank E (em breve).', minLevel: 1, price: 120 },
   { id: 'aura_azure', name: 'Aura Cerúlea', type: 'cosmetic', rarity: 'rare', icon: 'aperture', description: 'Apenas visual.', minLevel: 1 },
 ];
@@ -61,7 +56,6 @@ export interface QuestTemplate {
   level?: Level;
 }
 
-/** Converte um modelo da Biblioteca em missão, no nível escolhido. */
 export function fromLibrary(id: string, level: Level = 1, type?: QuestType): QuestTemplate {
   const t = LIBRARY_MAP[id];
   const r = resolveTemplate(t, level);
@@ -88,7 +82,6 @@ export const OBJECTIVES: { key: string; label: string; icon: string; description
   { key: "social", label: "Social", icon: "people", description: "Amigos e família", attribute: "CAR", quests: [fromLibrary("mensagem"), fromLibrary("conversa_presente")] },
 ];
 
-/** Semanais sugeridas pelo Sistema conforme o atributo mais fraco. */
 export const WEEKLY_SUGGESTIONS: Record<AttributeKey, QuestTemplate> = {
   FOR: fromLibrary('treinar_semana'),
   VIT: fromLibrary('cozinhar'),
